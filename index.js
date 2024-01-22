@@ -54,47 +54,56 @@ const employeeQuestions = [
         message: "What is the employee's email?"
     },
     {
-        type: 'list', // Determines how you interact with terminal
+        type: 'list',
         name: 'type',
         message: "What type of employee?",
         choices: ["Engineer", "Intern"],
     },
     {
         type: 'input',
+        name: 'github',
+        message: "What is the engineer's github name?",
+        when: (answers) => answers.type === 'Engineer'
+    },
+    {
+        type: 'input',
         name: 'school',
         message: "What is the intern's school?",
         when: (answers) => answers.type === 'Intern' //Repeat this for engineer and intern
-    }
+    },
 ]
 
 const continuationQuestions = [
     {
         type: 'list',
         name: 'option',
-        message: "Ready to build your team?", //asks whether everything is ready to put together
+        message: "Add another employee or generate the team profile?", //asks whether everything is ready to put together
         choices: ["Add another employee", "Generate the team profile"] //use fs to generate profile if generating
     },
 ]
 
 function runApp() {
     inquirer.prompt(questions)
-    .then(answers => { //.then waits for your info (promise)
-        console.log(answers)
-        continuation()
-    })
+        .then(answers => { //.then waits for your info (promise)
+            console.log(answers)
+            continuation()
+        })
 }
 
 function askQuestions() {
-// copy from above, change questions being asked [array]
+    inquirer.prompt(employeeQuestions)
+        .then(answers => {
+            console.log(answers)
+            continuation()
+        })
 }
 
 function continuation() {
-// ''
-inquirer.prompt(continuationQuestions)
-.then(answers => { //.then waits for your info (promise)
-    console.log(answers)
-    //if chosen add enother employee, execute askQuestions
-})
+    inquirer.prompt(continuationQuestions)
+        .then(answers => { //.then waits for your info (promise)
+            console.log(answers)
+            //if chosen add enother employee, execute askQuestions
+        })
 }
 
 runApp() //execution of the function, or calling
