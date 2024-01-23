@@ -103,6 +103,9 @@ function continuation() {
         .then(answers => { //.then waits for your info (promise)
             console.log(answers)
             //if chosen add enother employee, execute askQuestions
+            if(answers === "Add another employee") {
+                askQuestions()
+            }
         })
 }
 
